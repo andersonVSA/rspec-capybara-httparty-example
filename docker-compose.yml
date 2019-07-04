@@ -1,0 +1,14 @@
+chrome:
+  image: selenium/standalone-chrome:latest
+  ports:
+    - "4444:4444"
+  volumes:
+    - /dev/shm:/dev/shm
+app:
+  build: .
+  links:
+    - chrome
+  environment:
+    - DRIVER=hub
+    - DRIVER_URL=http://chrome:4444/wd/hub
+  command: bundle exec rspec
